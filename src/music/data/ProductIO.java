@@ -26,15 +26,42 @@ public class ProductIO {
     }
 
     public static Product getProduct(String productCode) {
-        return null;
+    	
+    	Product product = new Product();
+    	for(Product p:products) {
+    		if(p.getCode().contentEquals(productCode)) {
+    			product = p;
+    			break;
+    		}
+    	}
+        return product;
+        
     }
 
     public static void insertProduct(Product product) {
+    	products.add(product);
     }
 
     public static void updateProduct(Product product) {
+    	
+    	for(Product p:products) {
+    		if(p.getCode().equals(product.getCode())) {
+    			product.remove(p);
+    			products.add(product);
+    			break;
+    		}
+    	}
+    	
     }
 
     public static void deleteProduct(String code) {
+    	
+    	for(Product p:products) {
+    		if(p.getCode().equals(code)) {
+    			products.remove(p);
+    			break;
+    		}
+    	}
     }
+    
 }

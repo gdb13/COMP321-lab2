@@ -46,7 +46,7 @@ public class ProductIO {
     	
     	for(Product p:products) {
     		if(p.getCode().equals(product.getCode())) {
-    			product.remove(p);
+    			products.remove(p);
     			products.add(product);
     			break;
     		}

@@ -30,6 +30,7 @@ public class DeleteProductServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * Pass product and pass attributes to confirmDelete.jsp
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -38,25 +39,32 @@ public class DeleteProductServlet extends HttpServlet {
 			session.setAttribute("products", ProductIO.getProducts());
 		}
 		
+		String productCode = (String)request.getParameter("productCode");
+		Product product = ProductIO.getProduct(productCode);
+		request.setAttribute("product", product);
+		
+		getServletContext().getRequestDispatcher("/WEB-INF/jsp/confirmDelete.jsp").forward(request, response);
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * Remove product from list if confirmed, forward to productMaint.jsp
 	 */
 	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
 		
-		// from productMaint.jsp
 		String productCode = (String)request.getParameter("productCode");
-		
 		Product product = ProductIO.getProduct(productCode);
-		request.setAttribute("product", product);
 		
-		if(session.getAttribute("source").equals("confirmDelete.jsp")) {
+		if(request.getParameter("confirmedDelete").equals("yes")) {
 			((List<Product>) session.getAttribute("products")).remove(product);
 		}
+		
+		getServletContext().getRequestDispatcher("/WEB-INF/jsp/productMaint.jsp").forward(request, response);
+		
 		
 	}
 

@@ -15,16 +15,17 @@
 	<h1>Are you sure you want to delete this product?</h1>
 
 	<table>
-		<tr><td><b>Code:</b></td><td>8601</td></tr>
-		<tr><td><b>Description:</b></td><td>86 (the band) - True Life Songs and Pictures</td></tr>
-	    <tr><td><b>Price:</b></td><td>$14.95</td></tr>
+		<tr><td><b>Code:</b></td><td>${product.code}</td></tr>
+		<tr><td><b>Description:</b></td><td>${product.description}</td></tr>
+	    <tr><td><b>Price:</b></td><td>${product.price}</td></tr>
 	</table>
 
-    <form>
-        <input type="submit" value="Yes" />
+    <form action="DeleteProduct" method="post">
+    	<input type="hidden" name="productCode" value="${product.code}" />
+        <input type="submit" name="confirmedDelete" value="Yes" />
     </form>
-    <form action="productMaint" method="get">
-        <input type="submit" value="No" />
+    <form action="DeleteProduct" method="post">
+        <input type="submit" name="confirmedDelete" value="No" />
     </form>
     
 </body>

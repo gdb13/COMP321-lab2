@@ -28,7 +28,7 @@
             <td>${product.description}</td>
             <td style="text-align:right">${product.price}</td>
             <td><a href="EditProduct?productCode=${product.code}">Edit</a></form></td>
-            <td><a href="confirmDelete.html">Delete</a></td>
+            <td><a href="DeleteProduct?productCode=${product.code}">Delete</a></td>
         </tr>
         </c:forEach>
 

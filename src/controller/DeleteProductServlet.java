@@ -55,7 +55,7 @@ public class DeleteProductServlet extends HttpServlet {
 		
 		String productCode = (String)request.getParameter("productCode");
 		
-		if(request.getParameter("confirmedDelete").equals("yes")) {
+		if(request.getParameter("confirmedDelete").equals("Yes")) {
 			ProductIO.deleteProduct(productCode);
 		}
 		

@@ -27,7 +27,7 @@
             <td>${product.code}</td>
             <td>${product.description}</td>
             <td style="text-align:right">${product.price}</td>
-            <td><form action="EditProduct" method="post" id="${product.code}"><input type="hidden" id="productCode" name="productCode" value="${product.code}"><a href="javascript:{}" onclick="document.getElementById('${product.code}').submit();return false;">Edit</a></form></td>
+            <td><a href="EditProduct?productCode=${product.code}">Edit</a></form></td>
             <td><a href="confirmDelete.html">Delete</a></td>
         </tr>
         </c:forEach>

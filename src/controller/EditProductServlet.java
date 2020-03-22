@@ -36,6 +36,10 @@ public class EditProductServlet extends HttpServlet {
 			session.setAttribute("products", ProductIO.getProducts());
 		}
 		
+		String productCode = (String)request.getParameter("productCode");
+		Product product = ProductIO.getProduct(productCode);
+		request.setAttribute("product", product);
+		
 		getServletContext().getRequestDispatcher("/WEB-INF/jsp/editProduct.jsp").forward(request, response);
 		
 	}
@@ -44,14 +48,7 @@ public class EditProductServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		// from productMaint.jsp
-		String productCode = (String)request.getParameter("productCode");
-		
-		Product product = ProductIO.getProduct(productCode);
-		request.setAttribute("product", product);
-		
-		getServletContext().getRequestDispatcher("/WEB-INF/jsp/editProduct.jsp").forward(request, response);
+		doGet(request, response);
 	}
 
 }

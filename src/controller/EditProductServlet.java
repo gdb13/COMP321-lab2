@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,9 +34,6 @@ public class EditProductServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		if(session.isNew()) {
-			session.setAttribute("products", ProductIO.getProducts());
-		}
 		
 		String productCode = (String)request.getParameter("productCode");
 		Product product = ProductIO.getProduct(productCode);
@@ -48,7 +47,19 @@ public class EditProductServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		
+		HttpSession session = request.getSession();
+		
+		// create new updated product object
+		Product updatedProduct = new Product();
+		updatedProduct.setCode(request.getParameter("productCode"));
+		updatedProduct.setDescription(request.getParameter("productDescription"));
+		updatedProduct.setPrice(Double.parseDouble(request.getParameter("productCost")));
+
+		// update session products
+		ProductIO.updateProduct(updatedProduct);
+		
+		getServletContext().getRequestDispatcher("/WEB-INF/jsp/productMaint.jsp").forward(request, response);
 	}
 
 }

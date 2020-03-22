@@ -35,9 +35,6 @@ public class DeleteProductServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		if(session.isNew()) {
-			session.setAttribute("products", ProductIO.getProducts());
-		}
 		
 		String productCode = (String)request.getParameter("productCode");
 		Product product = ProductIO.getProduct(productCode);
@@ -57,10 +54,9 @@ public class DeleteProductServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String productCode = (String)request.getParameter("productCode");
-		Product product = ProductIO.getProduct(productCode);
 		
 		if(request.getParameter("confirmedDelete").equals("yes")) {
-			((List<Product>) session.getAttribute("products")).remove(product);
+			ProductIO.deleteProduct(productCode);
 		}
 		
 		getServletContext().getRequestDispatcher("/WEB-INF/jsp/productMaint.jsp").forward(request, response);

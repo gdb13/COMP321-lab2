@@ -13,10 +13,10 @@
 <body>
 <h1>Product Maintenance</h1>
 
-<form>
-    <label for="code">Code:</label><input type="text" name="code" size="10" value="${product.code}" /><br />
-    <label for="description">Description:</label><input type="text" name="description" size="50" value="${product.description}" /><br />
-    <label for="price">Price:</label><input type="text" name="price" size="10" value="${product.price}" /><br />
+<form action="EditProduct" method="post">
+    <label for="code">Code:</label><input type="text" name="productCode" size="10" value="${product.code}" /><br />
+    <label for="description">Description:</label><input type="text" name="productDescription" size="50" value="${product.description}" /><br />
+    <label for="price">Price:</label><input type="text" name="productCost" size="10" value="${product.price}" /><br />
     <input type="submit" value="Update Product" />
 </form>
 

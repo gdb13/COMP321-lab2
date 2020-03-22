@@ -8,20 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import music.data.ProductIO;
-
 /**
- * Servlet implementation class HomeServlet
+ * Servlet implementation class SearchResultsServlet
  */
-
-@WebServlet("/")
-public class HomeServlet extends HttpServlet {
+@WebServlet("/SearchResults")
+public class SearchResultsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HomeServlet() {
+    public SearchResultsServlet() {
         super();
         
     }
@@ -33,7 +30,8 @@ public class HomeServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		
-		getServletContext().getRequestDispatcher("/WEB-INF/jsp/index.jsp").forward(request, response);
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 	}
 
 	/**
@@ -42,7 +40,6 @@ public class HomeServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		doGet(request, response);
-
 	}
 
 }

@@ -6,10 +6,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import music.data.ProductIO;
 
 /**
  * Servlet implementation class HomeServlet
  */
+
 @WebServlet("/")
 public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -19,15 +23,16 @@ public class HomeServlet extends HttpServlet {
      */
     public HomeServlet() {
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("products", ProductIO.getProducts());
 		
 		getServletContext().getRequestDispatcher("/WEB-INF/jsp/index.jsp").forward(request, response);
 	}
@@ -36,8 +41,9 @@ public class HomeServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		doGet(request, response);
+
 	}
 
 }

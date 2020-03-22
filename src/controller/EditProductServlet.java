@@ -1,8 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,31 +12,32 @@ import music.data.ProductIO;
 import music.models.Product;
 
 /**
- * Servlet implementation class ProductServlet
+ * Servlet implementation class EditProductServlet
  */
-@WebServlet("/ProductList")
-public class ProductServlet extends HttpServlet {
+@WebServlet("/EditProduct")
+public class EditProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductServlet() {
+    public EditProductServlet() {
         super();
-        // TODO Auto-generated constructor stub
+        
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
 		HttpSession session = request.getSession();
 		if(session.isNew()) {
 			session.setAttribute("products", ProductIO.getProducts());
 		}
 		
-		getServletContext().getRequestDispatcher("/WEB-INF/jsp/productMaint.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/WEB-INF/jsp/editProduct.jsp").forward(request, response);
+		
 	}
 
 	/**
@@ -46,8 +45,13 @@ public class ProductServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		doGet(request, response);
+		// from productMaint.jsp
+		String productCode = (String)request.getParameter("productCode");
 		
+		Product product = ProductIO.getProduct(productCode);
+		request.setAttribute("product", product);
+		
+		getServletContext().getRequestDispatcher("/WEB-INF/jsp/editProduct.jsp").forward(request, response);
 	}
 
 }

@@ -6,8 +6,8 @@
 
 <head>
 	<meta charset="ISO-8859-1">
-	<link rel="stylesheet" type="text/css" href="styles/main.css">
 	<title>Product Maintenance</title>
+	<link href="styles/main.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -16,7 +16,7 @@
 <a href="ProductList">View Products</a><br />
 
 <h1>User Views</h1>
-<a href="searchResults.html">Search Results</a><br />
+<a href="SearchResults">Search Results</a><br />
 
 </body>
 

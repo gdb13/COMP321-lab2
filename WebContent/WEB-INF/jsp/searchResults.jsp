@@ -7,6 +7,7 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<title>Franklin Music - Search Results</title>
+	<link href="styles/main.css" rel="stylesheet" />
 </head>
 
 <body>

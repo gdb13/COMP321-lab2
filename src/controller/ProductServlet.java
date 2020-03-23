@@ -34,7 +34,11 @@ public class ProductServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
+		if(session.isNew()) {
+			getServletContext().getRequestDispatcher("/WEB-INF/jsp/index.jsp").forward(request, response);
+		}
 		
+		request.setAttribute("products", ProductIO.getProducts());
 		getServletContext().getRequestDispatcher("/WEB-INF/jsp/productMaint.jsp").forward(request, response);
 	}
 

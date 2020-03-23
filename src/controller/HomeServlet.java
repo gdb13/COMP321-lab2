@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import music.data.ProductIO;
+import music.models.CartEntry;
 import music.models.Product;
 
 /**
@@ -36,8 +37,10 @@ public class HomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		List<Product> products = new ArrayList<>();
-		session.setAttribute("cart", products);
+		//session.setAttribute("products",ProductIO.getProducts());
+		
+		List<CartEntry> cartEntries = new ArrayList<>();
+		session.setAttribute("cart", cartEntries);
 		
 		getServletContext().getRequestDispatcher("/WEB-INF/jsp/index.jsp").forward(request, response);
 	}

@@ -17,6 +17,12 @@
     <label for="code">Code:</label><input type="text" name="productCode" size="10" value="${product.code}" /><br />
     <label for="description">Description:</label><input type="text" name="productDescription" size="50" value="${product.description}" /><br />
     <label for="price">Price:</label><input type="text" name="productCost" size="10" value="${product.price}" /><br />
+    <c:if test="${empty product.code}">
+    <input type="hidden" name="AddOrUpdate" value="Add">
+    </c:if>
+    <c:if test="${not empty product.code}">
+    <input type="hidden" name="AddOrUpdate" value="Update">
+    </c:if>
     <input type="submit" value="Update Product" />
 </form>
 

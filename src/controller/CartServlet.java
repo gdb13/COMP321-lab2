@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import music.data.ProductIO;
+import music.models.CartEntry;
 import music.models.Product;
 
 /**
@@ -33,9 +35,15 @@ public class CartServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		List<Product> products = (List<Product>) session.getAttribute("cart");
+		if(session.isNew()) {
+			getServletContext().getRequestDispatcher("/WEB-INF/jsp/index.jsp").forward(request, response);
+		}
 		
-		request.setAttribute("products", products);
+		@SuppressWarnings("unchecked")
+		List<CartEntry> cartEntries = (List<CartEntry>) session.getAttribute("cart");
+		
+		request.setAttribute("cart", cartEntries);
+		request.setAttribute("cartTotal", getCartTotal(cartEntries));
 		getServletContext().getRequestDispatcher("/WEB-INF/jsp/cart.jsp").forward(request, response);
 	}
 
@@ -43,8 +51,42 @@ public class CartServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		HttpSession session = request.getSession();
+		
+		@SuppressWarnings("unchecked")
+		List<CartEntry> cartEntries = (List<CartEntry>) session.getAttribute("cart");
+		
+		// increment cart item by one if found
+		Boolean itemFound = false;
+		for(CartEntry ce:cartEntries) {
+			if(ce.getProduct().getCode().equals(request.getParameter("productCode"))) {
+				ce.setQty(ce.getQty()+1);
+				itemFound = true;
+			}
+		}
+		
+		// cart item not previously added; create cart entry and add to cart
+		if(!itemFound) {
+			Product product = ProductIO.getProduct(request.getParameter("productCode"));
+			CartEntry cartEntry = new CartEntry(product, 1);
+			cartEntries.add(cartEntry);
+		}
+		
+		session.setAttribute("cart", cartEntries);
+		request.setAttribute("cartTotal", getCartTotal(cartEntries));
+		getServletContext().getRequestDispatcher("/WEB-INF/jsp/cart.jsp").forward(request, response);
+	}
+	
+	
+	private double getCartTotal(List<CartEntry> cartEntries) {
+
+		double cartTotal = 0;
+		for(CartEntry ce:cartEntries) {
+			cartTotal = cartTotal + ce.getProduct().getPrice();
+		}
+		
+		return cartTotal;
 	}
 
 }
